@@ -31,9 +31,3 @@ As imagens históricas **não utilizam tiles dinâmicos**, e sim imagens posicio
 ## 🧠 Por que fiz este projeto?
 
 Resolvi criar esse projeto para **praticar JavaScript "puro"**, lidando com DOM, eventos e estrutura de dados sem o uso de frameworks como React ou Vue. Para a parte de mapas, usei o **Leaflet**, que é uma biblioteca leve e poderosa para mapas interativos.
-
-## 🚀 Como usar
-
-1. Clone o repositório:
-   ```bash
-   git clone https://github.com/francesccolucas/seu-repo-aqui.git
