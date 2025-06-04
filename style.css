@@ -1,0 +1,880 @@
+/* Paleta:
+Fundo: #fefdfa
+Dourado: #d4af37
+Azul marinho: #001f3f
+*/
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #fefdfa;
+  color: #001f3f;
+}
+
+
+#app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+#sidebar {
+  min-width: 220px;
+  max-width: 300px;
+  background: #fff;
+  border-right: 2px solid #d4af37;
+  padding: 1.5rem 1rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  z-index: 1000;
+  box-shadow: 2px 0 8px #001f3f11;
+}
+
+#sidebar h2 {
+  margin: 0 0 0.75rem 0;
+  color: #001f3f;
+  font-size: 1.2rem;
+  border-bottom: 1px solid #d4af37;
+  padding-bottom: 0.3rem;
+}
+
+#pins-list {
+  flex: 1;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+}
+
+.pin-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 0.3rem;
+  padding: 0.22rem 0.3rem;
+  border-radius: 5px;
+  transition: background 0.2s;
+}
+
+.pin-item.selected {
+  animation: highlight-pin 0.3s linear;
+  background: #d4af3733;
+}
+
+@keyframes highlight-pin {
+  0% {
+    background: #d4af3777;
+  }
+
+  50% {
+    background: none;
+  }
+}
+
+.pin-icon {
+  transform: perspective(40px) rotateX(20deg) rotateZ(-45deg);
+  border-radius: 50% 50% 50% 0;
+  width: 18px;
+  height: 18px;
+  margin-right: 5px;
+  background: #001f3f;
+  border: 2px solid #72afe8;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.pin-icon.imported {
+  background: #d4af37;
+  border: 2px solid #8c7e17;
+}
+
+.pin-item .pin-label {
+  flex: 1;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+  color: #001f3f;
+}
+
+.pin-item .pin-label.imported {
+  color: #d4af37;
+}
+
+.pin-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.20rem;
+}
+
+.pin-action {
+  border: none;
+  background: transparent;
+  color: #b22e2e;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-left: 1px;
+  padding: 1px 3px;
+  border-radius: 3px;
+}
+
+.pin-action.rename {
+  color: #1f619a;
+}
+
+.pin-action[title] {
+  outline: none;
+}
+
+#sidebar button,
+.modal-actions button {
+  background: #001f3f;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  padding: 0.46em 0.76em;
+  cursor: pointer;
+  margin-top: 0.3rem;
+  transition: background 0.18s;
+  box-shadow: 0 2px 6px #001f3f11;
+}
+
+#sidebar button:hover,
+.modal-actions button:hover {
+  background: #14305d;
+}
+
+#sidebar #import-export-btn {
+  font-size: 1rem;
+  padding: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  background: #183153;
+  font-family: "Montserrat", sans-serif;
+  box-shadow: 0px 6px 24px 0px rgba(0, 0, 0, 0.2);
+}
+
+#sidebar #import-export-btn:hover {
+  background-color: #d4af37;
+  color: #183153;
+}
+
+
+
+#sidebar button.pin-action[title="Excluir"] {
+  background: rgb(205, 31, 19);
+}
+
+#sidebar button.pin-action[title="Excluir"]:hover {
+  background: rgb(92, 23, 20);
+}
+
+#main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+#top-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  background: #fefdfa;
+  border-bottom: 1.5px solid #d4af37;
+  padding: 0.6rem 1rem 0.4rem 1rem;
+  gap: 1rem;
+  z-index: 1001;
+}
+
+#slider-wrapper {
+  flex: 1 1 350px;
+  max-width: 70vw;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+#year-slider {
+  width: 100%;
+  margin-top: 3px;
+  accent-color: #d4af37;
+  cursor: pointer;
+}
+
+#slider-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  margin-left: 1px;
+  margin-right: 6px;
+  color: #001f3f;
+}
+
+#map-layer-switches {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 35px;
+  height: 20px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider-switch {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #001f3f;
+  border-radius: 20px;
+  transition: .3s;
+}
+
+.slider-switch:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: .3s;
+}
+
+.switch input:checked+.slider-switch {
+  background: #d4af37;
+}
+
+.switch input:checked+.slider-switch:before {
+  transform: translateX(15px);
+}
+
+.switch-label {
+  font-size: 0.96em;
+  color: #001f3f;
+  margin-right: 1em;
+  font-weight: 500;
+}
+
+
+
+#about-btn {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  background: #183153;
+  font-family: "Montserrat", sans-serif;
+  box-shadow: 0px 6px 24px 0px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  cursor: pointer;
+  border: none;
+}
+
+#about-btn:after {
+  content: " ";
+  width: 0%;
+  height: 100%;
+  background: #D4AF37;
+  position: absolute;
+  transition: all 0.4s ease-in-out;
+  right: 0;
+}
+
+#about-btn:hover::after {
+  right: auto;
+  left: 0;
+  width: 100%;
+}
+
+#about-btn span {
+  text-align: center;
+  text-decoration: none;
+  width: 100%;
+  padding: 18px 25px;
+  color: #fff;
+  font-size: 1.125em;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  z-index: 20;
+
+}
+
+#about-btn:hover span {
+  color: #183153;
+  animation: scaleUp 0.3s ease-in-out;
+}
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(0.95);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+
+
+
+
+
+/* #about-btn {
+  display: inline-block;
+  padding: 12px 28px;
+  margin: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #fff;
+  background-image: linear-gradient(to bottom right, #176db4, #001f3f);
+  border: none;
+  border-radius: 40px;
+  box-shadow: 0px 4px 0px #001f3f;
+  cursor: pointer;
+}
+#about-btn:hover {
+  transform: translateY(-2px);
+  background-image: linear-gradient(to bottom right, #ecd439, #94852b);
+  box-shadow: 0px 6px 0px #d4af37;
+} */
+
+
+#map {
+  flex: 1;
+  width: 100%;
+  min-height: 350px;
+  position: relative;
+  z-index: 0;
+}
+
+/* Overlay de carregamento imagem histórica */
+#overlay-loading {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100%;
+  text-align: center;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#overlay-loading>div {
+  font-size: 1.18em;
+  padding: 1.25em 2em;
+  background: rgba(254, 253, 250, 0.96);
+  border-radius: 13px;
+  color: #001f3f;
+  font-weight: 500;
+  box-shadow: 0 2px 32px #001f3f22;
+  border: 1px solid #d4af37;
+}
+
+/* Otimização de visualização para overlays históricos PNGs enormes */
+.leaflet-overlay-pane img {
+  image-rendering: auto !important;
+  max-width: 100vw !important;
+  max-height: 100vh !important;
+  object-fit: contain !important;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #001f3f33;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  transition: opacity .2s;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: #fffdfa;
+  border-radius: 14px;
+  box-shadow: 0 4px 32px #001f3f33;
+  min-width: 300px;
+  max-width: 90vw;
+  min-height: 100px;
+  padding: 1.4rem 1.1rem 1.2rem 1.1rem;
+  color: #001f3f;
+  overflow-x: auto;
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  color: #001f3f;
+}
+
+.modal-content a {
+  color: #d4af37;
+  font-weight: bold;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 0.6em;
+  margin-top: 1.1em;
+}
+
+.import-label {
+  background: #d4af37;
+  color: #001f3f;
+  border-radius: 6px;
+  padding: 0.3em 1em;
+  cursor: pointer;
+}
+
+.import-label input {
+  display: none;
+}
+
+#pins-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.6em;
+}
+
+#pins-table th,
+#pins-table td {
+  text-align: left;
+  padding: 0.21em 0.5em;
+  border: none;
+  font-size: 0.96em;
+}
+
+#pins-table th {
+  background: #fefdfa;
+  color: #001f3f;
+}
+
+#pins-table tbody tr:nth-child(odd) {
+  background: #f3ecd7;
+}
+
+#pins-table .imported {
+  color: #d4af37;
+}
+
+.modal-close {
+  background: #e6e6e6;
+  color: #001f3f;
+  margin-left: auto;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 900px) {
+  #app-container {
+    flex-direction: column;
+  }
+
+  #sidebar {
+    flex-direction: row;
+    max-width: unset;
+    min-width: 0;
+    width: 100%;
+    border-right: none;
+    border-bottom: 2px solid #d4af37;
+  }
+
+  #main-content {
+    min-width: 0;
+  }
+
+  #top-bar {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 700px) {
+  #sidebar {
+    padding: 1rem 0.4rem;
+    font-size: 0.96em;
+  }
+
+  #main-content {
+    font-size: 0.97em;
+  }
+
+  #slider-labels {
+    font-size: 0.93em;
+  }
+}
+
+@media (max-width:500px) {
+  #sidebar {
+    font-size: 0.9em;
+  }
+
+  .modal-content {
+    min-width: 93vw;
+  }
+}
+
+/* Personalização dos ícones do mapa via JS */
+
+/* Animação visual para marker selecionado no mapa */
+.pin-selected-anim>div {
+  animation: pin-gradient-anim 1.5s linear;
+  background: linear-gradient(135deg, #001f3f 0%, #d4af37 100%);
+  box-shadow: 0 0 10px 3px #d4af37;
+}
+
+@keyframes pin-gradient-anim {
+  0% {
+    background: linear-gradient(135deg, #001f3f 0%, #d4af37 100%);
+  }
+
+  50% {
+    background: linear-gradient(135deg, #d4af37 0%, #001f3f 100%);
+  }
+
+  100% {
+    background: linear-gradient(135deg, #001f3f 0%, #d4af37 100%);
+  }
+}
+
+/* Destaque vermelho fixo para pin selecionado */
+.pin-selected-red>div {
+  background: #c1272d !important;
+  box-shadow: 0 0 10px 3px #c1272d;
+  border: 2px solid #fff;
+  transition: none;
+}
+
+
+/*Fechar modal*/
+.modal-close {
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: #e62222;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.modal-close,
+.modal-close span {
+  transition: 200ms;
+}
+
+.modal-close .text {
+  transform: translateX(35px);
+  color: white;
+  font-weight: bold;
+}
+
+.modal-close .icon {
+  position: absolute;
+  border-left: 1px solid #c41b1b;
+  transform: translateX(110px);
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close svg {
+  width: 15px;
+  fill: #eee;
+}
+
+.modal-close:hover {
+  background: #ff3636;
+}
+
+.modal-close:hover .text {
+  color: transparent;
+}
+
+.modal-close:hover .icon {
+  width: 150px;
+  border-left: none;
+  transform: translateX(0);
+}
+
+.modal-close:focus {
+  outline: none;
+}
+
+.modal-close:active .icon svg {
+  transform: scale(0.8);
+}
+
+
+#about-modal {
+  background-color: rgba(0, 31, 63, 0.5);
+  /* Escurece o fundo */
+}
+
+/* Conteúdo interno da modal */
+#about-modal .modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  max-width: 800px;
+  width: 90%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.satellite-credit {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background-color: rgba(0, 31, 63, 0.7);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-family: sans-serif;
+  z-index: 1000;
+
+}
+
+.satellite-credit a {
+  color: #d4af37;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.satellite-credit a:hover {
+  color: #f9e8a6;
+  /* Amarelo mais claro no hover */
+}
+
+
+/* Oculta o menu mobile no desktop */
+.mobile-pin-menu {
+  display: none;
+}
+
+/* Melhorias para Mobile */
+@media (max-width: 768px) {
+
+  /* Redução de tamanho dos botões no mobile */
+  #sidebar #import-export-btn {
+    font-size: 0.85rem;
+    padding: 0.8rem;
+    font-size: 0.85rem;
+    padding: 0.8rem;
+    
+    /* Alinhar ao topo direito da tela */
+    position: fixed;
+    top: 10px; /* Distância do topo */
+    right: 30px; /* Distância da borda direita */
+    z-index: 1000; /* Garantir que o botão fique sobre outros elementos */
+  
+  }
+
+  #about-btn span {
+    padding: 10px 15px;
+    font-size: 0.9em;
+  }
+
+  /* Menu hamburger para pins */
+  .hamburger-menu {
+    display: none;
+    padding: 10px;
+    cursor: pointer;
+      
+  }
+
+  .hamburger-menu .bar {
+    width: 18px;
+    height: 2px;
+    background-color: #001f3f;
+    margin: 4px 0;
+    transition: 0.3s;
+  }
+
+  /* Configurações para o menu de pins quando aberto */
+  .mobile-pin-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 91vw;
+    height: 100%;
+    background-color: rgba(0, 31, 63, 0.9);
+    z-index: 2000;
+    padding: 20px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobile-pin-menu.visible {
+    transform: translateX(0);
+  }
+
+  .mobile-pin-menu h3 {
+    color: white;
+    margin-top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .mobile-pin-menu .close-menu {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  .mobile-pin-list {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .mobile-pin-item {
+    background-color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 8px;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .mobile-pin-name {
+    color: #001f3f;
+    font-weight: bold;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .mobile-pin-actions {
+    display: flex;
+    gap: 10px;
+  }
+
+  .mobile-pin-action {
+    background: #001f3f;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+
+  .mobile-pin-action.rename {
+    background: #1f619a;
+  }
+
+  .mobile-pin-action.delete {
+    background: #e62222;
+  }
+
+  /* Melhoria da modal Sobre para mobile */
+  #about-modal .modal-content {
+    max-height: 85vh;
+    overflow-y: auto;
+    padding-bottom: 70px;
+    /* Espaço para o botão de fechar */
+    position: relative;
+  }
+
+  #about-modal .modal-close {
+    position: sticky;
+    bottom: 10px;
+    margin-top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 40px;
+  }
+
+  #about-modal .modal-close .text {
+    transform: translateX(25px);
+  }
+
+  #about-modal .modal-close .icon {
+    transform: translateX(90px);
+    height: 30px;
+    width: 30px;
+  }
+
+  /* Ajustes no header para mobile */
+  #slider-wrapper {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  #map-layer-switches {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* Mostrar menu hamburger apenas no mobile */
+  
+    .hamburger-menu {
+      display: block;
+    }
+
+    #sidebar h2 {
+      display: flex;
+      align-items: center;
+    }
+
+    /* Esconder a lista de pins padrão em mobile */
+    #pins-list {
+      display: none;
+    }
+      .satellite-credit {
+    bottom: 30px;
+    right: 15px;
+    font-size: 12px;
+    padding: 6px 10px;
+    max-width: 90vw;
+    box-sizing: border-box;
+    z-index: 1; /* mais alto que o menu mobile */
+  }
+  }
